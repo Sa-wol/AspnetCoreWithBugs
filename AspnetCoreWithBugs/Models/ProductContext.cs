@@ -13,6 +13,6 @@ namespace AspnetCoreWithBugs.Models
         {
 
         }
-        public DbSet<AspnetCoreWithBugs.Models.Product> Product { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }
