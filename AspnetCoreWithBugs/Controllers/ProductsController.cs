@@ -33,7 +33,7 @@ namespace AspnetCoreWithBugs.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _context.AddAsync(product);
+                await ProductDB.CreateProductAsync(_context, product);
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
@@ -41,12 +41,8 @@ namespace AspnetCoreWithBugs.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
+            await ProductDB.EditProductIdAsync(_context, id);
+            return View();
         }
 
         [HttpPost]
@@ -54,8 +50,7 @@ namespace AspnetCoreWithBugs.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Update(product);
-                await _context.SaveChangesAsync();
+                await ProductDB.EditProductAsync(_context, product);
  
                 return RedirectToAction(nameof(Index));
             }
@@ -64,22 +59,14 @@ namespace AspnetCoreWithBugs.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
+            await ProductDB.DeleteProductAsync(_context, id);
+            return View();
         }
 
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
+            await ProductDB.DeleteProductConfirmAsync(_context, id);
             return RedirectToAction(nameof(Index));
         }
 
