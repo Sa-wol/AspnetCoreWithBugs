@@ -32,17 +32,19 @@ namespace AspnetCoreWithBugs.Models
             return product;
         }
 
-        public async static Task DeleteProductAsync(ProductContext _context, int id)
+        public async static Task<Product> DeleteProductAsync(ProductContext _context, int id)
         {
             var product = await _context.Products
                 .FirstOrDefaultAsync(m => m.ProductId == id);
-            await _context.SaveChangesAsync();
+
+            return product;
         }
 
         public async static Task<Product> DeleteProductConfirmAsync(ProductContext _context, int id)
         {
             var product = await _context.Products.FindAsync(id);
             _context.Products.Remove(product);
+            await _context.Products.SingleAsync();
 
             return product;
         }
