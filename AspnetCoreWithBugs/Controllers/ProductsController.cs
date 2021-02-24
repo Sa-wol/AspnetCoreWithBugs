@@ -54,7 +54,7 @@ namespace AspnetCoreWithBugs.Controllers
  
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View();
         }
 
         public async Task<IActionResult> Delete(int id)
