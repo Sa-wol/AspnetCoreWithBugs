@@ -51,10 +51,11 @@ namespace AspnetCoreWithBugs.Controllers
             if (ModelState.IsValid)
             {
                 await ProductDB.EditProductAsync(_context, product);
- 
+                // _context.Update(product);
+
                 return RedirectToAction(nameof(Index));
             }
-            return View();
+            return View(product);
         }
 
         public async Task<IActionResult> Delete(int id)
