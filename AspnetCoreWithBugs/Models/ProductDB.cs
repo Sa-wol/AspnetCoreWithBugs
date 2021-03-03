@@ -19,14 +19,14 @@ namespace AspnetCoreWithBugs.Models
         public async static Task<Product> EditProductIdAsync(ProductContext _context, int id)
         {
             var product = await _context.Products.FindAsync(id);
-            await _context.SaveChangesAsync();
 
             return product;
         }
 
         public async static Task<Product> EditProductAsync(ProductContext _context, Product product)
         {
-            _context.Update(product);
+            _context.Entry(product).State = EntityState.Modified;
+            // _context.Update(product);
             await _context.SaveChangesAsync();
 
             return product;
@@ -44,7 +44,7 @@ namespace AspnetCoreWithBugs.Models
         {
             var product = await _context.Products.FindAsync(id);
             _context.Products.Remove(product);
-            await _context.Products.SingleAsync();
+            await _context.SaveChangesAsync();
 
             return product;
         }
