@@ -41,8 +41,9 @@ namespace AspnetCoreWithBugs.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            await ProductDB.EditProductIdAsync(_context, id);
-            return View();
+            Product product = await ProductDB.RetrieveProductAsync(_context, id);
+
+            return View(product);
         }
 
         [HttpPost]
@@ -60,8 +61,8 @@ namespace AspnetCoreWithBugs.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            await ProductDB.DeleteProductAsync(_context, id);
-            return View();
+            Product product = await ProductDB.DeleteProductAsync(_context, id);
+            return View(product);
         }
 
         [HttpPost, ActionName("Delete")]
