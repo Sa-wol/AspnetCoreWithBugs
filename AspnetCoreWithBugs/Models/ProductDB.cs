@@ -16,9 +16,12 @@ namespace AspnetCoreWithBugs.Models
             return product;
         }
         
-        public async static Task<Product> EditProductIdAsync(ProductContext _context, int id)
+        public async static Task<Product> RetrieveProductAsync(ProductContext _context, int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            Product product = await _context
+                .Products
+                .Where(prod => prod.ProductId == id)
+                .SingleAsync();
 
             return product;
         }
